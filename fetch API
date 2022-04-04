@@ -1,0 +1,36 @@
+
+
+function fetchData() {
+    fetch("https://www.afrihost.com/resources/fedev/places.json")
+    .then(response => {
+        if (!response.ok) {
+            throw Error("ERROR");
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log(data);
+        const html = data
+        .map(user => {
+                return `
+                <div class ="user">
+                <p><img src="${user.featured.image}"alt="${user.featured.title}loading="lazy" width="1000" height="667" class="h-56 sm:h-full w-full sm:w-5/12 object-cover object-top rounded-lg transition duration-500 group-hover:rounded-xl" /></p>
+                 <p> ${user.featured.title}</p> 
+                 <p> ${user.featured.price}</p>
+                 <p> ${user.featured.location}</p>
+                 </div>
+                 `;
+            })
+            .join("");
+            console.log(html);
+            document
+            .querySelector("#app")
+            .insertAdjacentHTML("afterbegin", html);
+    })
+    .catch( error => {
+            console.log(error);
+    });
+}
+
+fetchData();
+
